@@ -87,7 +87,8 @@ export default {
       data: [],
       edit_id: "",
       content: "",
-      chat_id: ""
+      chat_id: "",
+      ok: ""
     };
   },
   mounted() {
