@@ -138,6 +138,7 @@ export default {
       reputation: "",
       kyc: "",
       content: "",
+      ok: ""
     };
   },
   mounted() {
