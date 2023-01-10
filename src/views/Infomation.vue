@@ -89,7 +89,7 @@
         </template>
       </v-simple-table>
       <v-btn color="primary" class="mt-5" @click="update"> Cập nhật </v-btn>
-      <v-btn color="error" class="ml-3 mt-5" @click="deleteKYC">
+      <v-btn color="error" class="ml-3 mt-5" @click="dialog2 = true">
         Xóa KYC
       </v-btn>
       <v-btn color="success" class="ml-3 mt-5" @click="dialog = true">
@@ -125,6 +125,34 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="dialog2" max-width="450px">
+      <v-card>
+        <v-card-title>
+          <span>Lý do KYC bị từ chối</span>
+          <v-spacer></v-spacer>
+          <v-btn icon @click="dialog2 = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-card-title>
+        <v-divider></v-divider>
+        <div class="mx-6 mt-6">
+          <v-autocomplete
+            :items="reason_list"
+            v-model="reason"
+            class="mt-5"
+            outlined
+            placeholder="Nếu đã nhắn tin riêng có thể để trống"
+          ></v-autocomplete>
+        </div>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn class="default" @click="dialog2 = false"> Hủy </v-btn>
+          <v-btn color="primary" @click="deleteKYC"> Xác nhận </v-btn>
+          <v-spacer></v-spacer>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </main>
 </template>
 
@@ -133,12 +161,21 @@ export default {
   data() {
     return {
       dialog: false,
+      dialog2: false,
       data: "",
       transaction: "",
       reputation: "",
       kyc: "",
       content: "",
-      ok: ""
+      reason_list: [
+        "Ảnh không đúng vui lòng KYC lại theo hướng dẫn!",
+        "Vui lòng chụp lại ảnh rõ hơn!",
+        "Vui lòng chụp sát CCCD/CMND!",
+        "Vui lòng chụp lại CCCD/CMND không để mất góc!",
+        "Vui lòng chụp rõ chân dung hơn!",
+        "Thẻ CCCD/CMND của bạn đã hết hạn!",
+      ],
+      reason: "",
     };
   },
   mounted() {
@@ -168,13 +205,15 @@ export default {
             this.sendMessage(content);
             return;
           }
-          this.$toast.success("Thành công");
+          this.$toast.success("Cập nhật thành công");
         }
       );
     },
     deleteKYC() {
       this.CallAPI("delete", "client/" + this.data.id, {}, (response) => {
-        this.$toast.success("Xóa thành công");
+        if (this.reason) {
+          this.sendMessage(this.reason);
+        }
         this.$router.push("/user");
       });
     },
