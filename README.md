@@ -1,4 +1,4 @@
-# wallet
+# admin
 
 ## Project setup
 ```
