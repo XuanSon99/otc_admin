@@ -14,7 +14,7 @@
             </tr>
             <tr>
               <td>Số điện thoại</td>
-              <td>{{ data.name }}</td>
+              <td>{{ data.phone }}</td>
             </tr>
             <tr>
               <td>Ảnh CCCD</td>
