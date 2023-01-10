@@ -1,0 +1,67 @@
+{
+  "app_name": "Adadex",
+  "password": "Password",
+  "new_password": "New password",
+  "confirm_password": "Confirm password",
+  "confirm": "Confirm",
+  "change_password": "Change password",
+  "recovery_phrase": "Recovery phrase",
+  "back": "Back",
+  "sidebar": {
+    "no_notification": "You have no notifications",
+    "logout": "Logout",
+    "adadex": "Adadex",
+    "dashboard": "Dashboard",
+    "send": "Send",
+    "recovery_phrase": "Recovery phrase",
+    "copy_phrase": "Copy phrase"
+  },
+  "login": {
+    "unlock": "Unlock",
+    "restore": "Restore",
+    "create_new_wallet": "Create a new wallet?",
+    "set_password_for_device": "Set password <br/> for device"
+  },
+  "register": {
+    "create_wallet": "Create wallet",
+    "confirm_recovery_phase": "Confirm recovery phrase",
+    "cancel": "Cancel",
+    "next": "Next",
+    "read_recovery_phrase": "I have saved the recovery phrase"
+  },
+  "home": {
+    "accounts": "Accounts",
+    "login": "Login",
+    "my_address": "My address",
+    "address": "Address",
+    "use": "use",
+    "cardano_scan": "CardanoScan",
+    "copy_address": " Copy Address",
+    "account_name": "Account name",
+    "create": "Create",
+    "table": {
+      "account_name": "Account name",
+      "address": "Address",
+      "actions": "Actions"
+    }
+  },
+  "errors": {
+    "missing_name": "Please enter your account name",
+    "fill_all_fields": "Please fill in all the fields",
+    "password": "Password with at least 6 characters",
+    "confirm_password": "Confirm password is incorrect",
+    "invalid_password": "Invalid password",
+    "same_password": "The new password is the same as the current password",
+    "confirm_recovery_unmatched": "Confirm recovery phrase is not correct",
+    "ask_confirm": "Please confirm",
+    "ask_enter_password": "Please enter password",
+    "login_again": "For security reason, please login again"
+  },
+  "success": {
+    "copy_success": "Copy successful",
+    "create_success": "Create successful",
+    "change_password_success": "Change password successfully",
+    "transaction_failed": "Transaction failed",
+    "transaction_success": "Successfully, please wait for a few seconds to make the next transaction"
+  }
+}
