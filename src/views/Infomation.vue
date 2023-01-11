@@ -6,7 +6,14 @@
           <tbody>
             <tr>
               <td>Username</td>
-              <td>{{ data.username }}</td>
+              <td>
+                <v-text-field
+                  v-model="username"
+                  outlined
+                  dense
+                  class="mt-5"
+                ></v-text-field>
+              </td>
             </tr>
             <tr>
               <td>Họ tên</td>
@@ -163,6 +170,7 @@ export default {
       dialog: false,
       dialog2: false,
       data: "",
+      username: "",
       transaction: "",
       reputation: "",
       kyc: "",
@@ -188,6 +196,7 @@ export default {
         this.transaction = res.data.transaction;
         this.reputation = res.data.reputation;
         this.kyc = res.data.kyc;
+        this.username = res.data.username;
       });
     },
     update() {
@@ -198,6 +207,7 @@ export default {
           transaction: this.transaction,
           reputation: this.reputation,
           kyc: this.kyc,
+          username: this.username,
         },
         (res) => {
           if (this.kyc == "success" && this.kyc != this.data.kyc) {
