@@ -247,3 +247,9 @@ p.cancel1 {
 .amount h1 {
     color: #0082cd;
 }
+
+.post img {
+    height: 60px;
+    width: 100px;
+    object-fit: cover;
+}

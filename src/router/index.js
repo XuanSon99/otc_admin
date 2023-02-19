@@ -29,6 +29,22 @@ const routes = [
     }
   },
   {
+    path: '/post',
+    name: 'post',
+    component: () => import('../views/Post.vue'),
+    meta: {
+      show: true
+    }
+  },
+  {
+    path: '/create-post',
+    name: 'CreatePost',
+    component: () => import('../views/CreatePost.vue'),
+    meta: {
+      show: true
+    }
+  },
+  {
     path: '/admin',
     name: 'Admin',
     component: () => import('../views/Admin.vue'),

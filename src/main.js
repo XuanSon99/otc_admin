@@ -35,7 +35,7 @@ Vue.use(Toast, {
 
 Vue.prototype.axios = axios
 Vue.prototype.image = function (url) {
-    return process.env.VUE_APP_BASE_URL + "/storage" + url;
+    return process.env.VUE_APP_BASE_URL + "/storage/" + url;
 }
 
 Vue.prototype.CallAPI = (method, url, data, callResponse, callError) => {

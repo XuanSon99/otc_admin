@@ -116,6 +116,11 @@ export default {
           route: "/user",
         },
         {
+          icon: "mdi-account-edit-outline",
+          text: "QL bài viết",
+          route: "/post",
+        },
+        {
           icon: "mdi-layers-outline",
           text: "Danh sách admin",
           route: "/admin",
