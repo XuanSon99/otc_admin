@@ -83,6 +83,7 @@ export default {
       data: [],
       edit_id: "",
       content: "",
+      ok: ""
     };
   },
   computed: {
