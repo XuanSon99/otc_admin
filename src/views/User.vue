@@ -35,7 +35,7 @@
           </v-btn>
           <v-btn small class="success mr-2" @click="editItem(item)">
             Nhắn tin
-          </v-btn>        
+          </v-btn>
         </template>
       </v-data-table>
     </div>
@@ -70,6 +70,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -88,11 +89,17 @@ export default {
       edit_id: "",
       content: "",
       chat_id: "",
-      ok: ""
+      ok: "",
     };
+  },
+  computed: {
+    ...mapGetters(["account"]),
   },
   mounted() {
     this.getData();
+    if (!this.account.rules.includes("user")) {
+      this.$router.push("/");
+    }
   },
   methods: {
     getData() {
@@ -102,7 +109,7 @@ export default {
     },
     editItem(item) {
       this.edit_id = item.id;
-      this.chat_id = item.chat_id
+      this.chat_id = item.chat_id;
       this.dialog = true;
     },
     sendMessage() {

@@ -99,6 +99,7 @@
   </section>
 </template>
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -111,16 +112,6 @@ export default {
           route: "/",
         },
         {
-          icon: "mdi-account-circle-outline",
-          text: "QL Khách hàng",
-          route: "/user",
-        },
-        {
-          icon: "mdi-account-edit-outline",
-          text: "QL bài viết",
-          route: "/post",
-        },
-        {
           icon: "mdi-layers-outline",
           text: "Danh sách admin",
           route: "/admin",
@@ -130,8 +121,12 @@ export default {
       dialog: false,
     };
   },
+  computed: {
+    ...mapGetters(["account"]),
+  },
   mounted() {
     this.drawer = this.$vuetify.breakpoint.width > 1024;
+    this.getInfo();
   },
   methods: {
     logout() {
@@ -145,7 +140,7 @@ export default {
       }
       this.CallAPI(
         "put",
-        "admin/1",
+        "admin/" + this.account.id,
         {
           password: this.password,
         },
@@ -153,6 +148,30 @@ export default {
           this.$toast.success("Thành công");
           this.dialog = false;
           this.password = "";
+        }
+      );
+    },
+    getInfo() {
+      this.CallAPI(
+        "get",
+        "info/" + localStorage.getItem("username"),
+        {},
+        (res) => {
+          this.$store.dispatch("setAccount", res.data);
+          if (this.account.rules.includes("user")) {
+            this.items.push({
+              icon: "mdi-account-circle-outline",
+              text: "QL Khách hàng",
+              route: "/user",
+            });
+          }
+          if (this.account.rules.includes("post")) {
+            this.items.push({
+              icon: "mdi-account-edit-outline",
+              text: "QL bài viết",
+              route: "/posts",
+            });
+          }
         }
       );
     },

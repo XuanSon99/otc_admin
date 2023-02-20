@@ -14,11 +14,7 @@
           single-line
           hide-details
         ></v-text-field>
-        <v-btn
-          color="primary"
-          class="ml-5"
-          @click="$router.push('create-post')"
-        >
+        <v-btn color="primary" class="ml-5" @click="$router.push('post/create')">
           Thêm mới
         </v-btn>
       </v-card-title>
@@ -37,6 +33,7 @@
           >
         </template>
         <template v-slot:[`item.actions`]="{ item }">
+          <!-- <v-btn class="success mr-3" @click="toEdit(item)"> Sửa </v-btn> -->
           <v-btn class="error" @click="deletePost(item)"> Xóa </v-btn>
         </template>
       </v-data-table>
@@ -45,6 +42,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -60,6 +58,9 @@ export default {
       edit_id: "",
       content: "",
     };
+  },
+  computed: {
+    ...mapGetters(["account"]),
   },
   mounted() {
     this.getData();
@@ -78,9 +79,13 @@ export default {
       return date.slice(0, 10);
     },
     deletePost(item) {
-      this.CallAPI("delete", "posts/" + item.id, {}, (res) => {
+      this.CallAPI("delete", "posts/" + item.slug, {}, (res) => {
         this.$toast.success("Xóa thành công");
+        this.getData();
       });
+    },
+    toEdit(item) {
+      this.$router.push("/post/" + item.slug);
     },
   },
 };

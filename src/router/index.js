@@ -29,7 +29,7 @@ const routes = [
     }
   },
   {
-    path: '/post',
+    path: '/posts',
     name: 'post',
     component: () => import('../views/Post.vue'),
     meta: {
@@ -37,7 +37,7 @@ const routes = [
     }
   },
   {
-    path: '/create-post',
+    path: '/post/:id',
     name: 'CreatePost',
     component: () => import('../views/CreatePost.vue'),
     meta: {

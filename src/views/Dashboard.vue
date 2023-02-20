@@ -39,11 +39,15 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
       data: "",
     };
+  },
+  computed: {
+    ...mapGetters(["account"]),
   },
   mounted() {
     this.getData();

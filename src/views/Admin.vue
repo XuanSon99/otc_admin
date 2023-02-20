@@ -70,6 +70,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -83,6 +84,9 @@ export default {
       edit_id: "",
       content: "",
     };
+  },
+  computed: {
+    ...mapGetters(["account"]),
   },
   mounted() {
     this.getData();

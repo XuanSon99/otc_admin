@@ -44,6 +44,7 @@ export default {
         { username: this.username, password: this.password },
         (res) => {
           localStorage.setItem("access_token", res.data.access_token);
+          localStorage.setItem("username", res.data.username);
           this.$router.push("/");
         },
         (err) => {

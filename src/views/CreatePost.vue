@@ -58,11 +58,13 @@
               <td>Bài viết nổi bật</td>
               <td>
                 <v-select
-                  :items="[0, 1]"
+                  :items="featured_list"
                   v-model="featured"
                   dense
                   class="mt-5"
                   outlined
+                  item-text="text"
+                  item-value="value"
                 ></v-select>
               </td>
             </tr>
@@ -102,12 +104,23 @@ export default {
       image: "",
       category_id: "",
       featured: 0,
+      featured_list: [
+        {
+          text: "Nổi bật",
+          value: 1,
+        },
+        {
+          text: "Không nổi bật",
+          value: 0,
+        },
+      ],
       body: "",
       categories: [],
     };
   },
   mounted() {
     this.getCategory();
+    this.getPost();
   },
   methods: {
     handleImageAdded(file, Editor, cursorLocation, resetUploader) {
@@ -120,18 +133,21 @@ export default {
         resetUploader();
       });
     },
+    getPost() {
+      // this.CallAPI("get", "posts/" + this.$route.params.id, {}, (res) => {
+      //   this.title = res.data.title;
+      //   this.body = res.data.body;
+      //   this.featured = res.data.featured;
+      //   this.image = res.data.image;
+      // });
+    },
     getCategory() {
       this.CallAPI("get", "categories", {}, (res) => {
         this.categories = res.data;
       });
     },
     confirm() {
-      if (
-        !this.title ||
-        !this.category_id ||
-        !this.body ||
-        !this.image
-      ) {
+      if (!this.title || !this.category_id || !this.body || !this.image) {
         this.$toast.error("Vui lòng nhập đủ thông tin!");
         return;
       }
@@ -144,7 +160,7 @@ export default {
       formData.append("image", this.image);
 
       this.CallAPI("post", "posts", formData, (res) => {
-        this.$router.push("/post")
+        this.$router.push("/posts");
         this.$toast.success("Thành công");
       });
     },
