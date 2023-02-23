@@ -19,7 +19,6 @@
               <td>URL Slug</td>
               <td>
                 <v-text-field
-                  readonly
                   v-model="slug"
                   outlined
                   dense
@@ -147,7 +146,7 @@ export default {
       });
     },
     confirm() {
-      if (!this.title || !this.category_id || !this.body || !this.image) {
+      if (!this.title || !this.body || !this.image) {
         this.$toast.error("Vui lòng nhập đủ thông tin!");
         return;
       }
