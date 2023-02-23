@@ -253,3 +253,7 @@ p.cancel1 {
     width: 100px;
     object-fit: cover;
 }
+
+#editor .ql-editor {
+    max-height: 600px
+}

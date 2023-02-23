@@ -29,14 +29,13 @@
             <tr>
               <td>Ảnh thumbnail</td>
               <td>
-                <v-file-input
-                  accept="image/png, image/jpeg, image/bmp"
-                  placeholder="Pick an avatar"
-                  prepend-icon="mdi-camera"
-                  label="Thumbnail"
-                  v-model="image"
-                  class="mt-5"
-                ></v-file-input>
+                <input class="mb-3" type="file" @change="inputImage($event)" />
+                <v-img
+                  :src="image_url ? image_url : image(old_image)"
+                  height="200px"
+                  width="200px"
+                  style="object-fit: cover"
+                />
               </td>
             </tr>
             <tr>
@@ -81,7 +80,7 @@
             <tr>
               <td>
                 <v-btn color="primary" class="mt-5" @click="confirm">
-                  Đăng bài
+                  Xác nhận
                 </v-btn>
               </td>
             </tr>
@@ -100,7 +99,7 @@ export default {
     return {
       title: "",
       slug: "",
-      image: "",
+      new_image: "",
       category_id: "",
       featured: 0,
       featured_list: [
@@ -115,6 +114,9 @@ export default {
       ],
       body: "",
       categories: [],
+      is_edit: false,
+      old_image: "",
+      image_url: "",
     };
   },
   mounted() {
@@ -132,13 +134,23 @@ export default {
         resetUploader();
       });
     },
+    inputImage(event) {
+      this.new_image = event.target.files[0];
+      this.image_url = URL.createObjectURL(this.new_image);
+    },
     getPost() {
-      // this.CallAPI("get", "posts/" + this.$route.params.id, {}, (res) => {
-      //   this.title = res.data.title;
-      //   this.body = res.data.body;
-      //   this.featured = res.data.featured;
-      //   this.image = res.data.image;
-      // });
+      if (this.$route.params.id == "create") {
+        return;
+      }
+      this.CallAPI("get", "posts/" + this.$route.params.id, {}, (res) => {
+        this.title = res.data.title;
+        this.body = res.data.body;
+        this.featured = res.data.featured;
+        this.category_id = res.data.category_id;
+        this.slug = res.data.slug;
+        this.old_image = res.data.image;
+        this.is_edit = true;
+      });
     },
     getCategory() {
       this.CallAPI("get", "categories", {}, (res) => {
@@ -146,7 +158,7 @@ export default {
       });
     },
     confirm() {
-      if (!this.title || !this.body || !this.image) {
+      if (!this.title || !this.body) {
         this.$toast.error("Vui lòng nhập đủ thông tin!");
         return;
       }
@@ -156,9 +168,16 @@ export default {
       formData.append("category_id", this.category_id);
       formData.append("featured", this.featured);
       formData.append("body", this.body);
-      formData.append("image", this.image);
+      if (this.new_image) {
+        formData.append("image", this.new_image);
+      }
+      let url = "posts";
+      if (this.is_edit) {
+        formData.append("_method", "put");
+        url = "posts/" + this.$route.params.id;
+      }
 
-      this.CallAPI("post", "posts", formData, (res) => {
+      this.CallAPI("post", url, formData, (res) => {
         this.$router.push("/posts");
         this.$toast.success("Thành công");
       });

@@ -33,7 +33,7 @@
           >
         </template>
         <template v-slot:[`item.actions`]="{ item }">
-          <!-- <v-btn class="success mr-3" @click="toEdit(item)"> Sửa </v-btn> -->
+          <v-btn class="success mr-3" @click="toEdit(item)"> Sửa </v-btn>
           <v-btn class="error" @click="deletePost(item)"> Xóa </v-btn>
         </template>
       </v-data-table>
