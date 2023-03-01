@@ -7,74 +7,41 @@
             <tr>
               <td>Tiêu đề</td>
               <td>
-                <v-text-field
-                  v-model="title"
-                  outlined
-                  dense
-                  class="mt-5"
-                ></v-text-field>
+                <v-text-field v-model="title" outlined @input="getSlug" dense class="mt-5"></v-text-field>
               </td>
             </tr>
             <tr>
               <td>URL Slug</td>
               <td>
-                <v-text-field
-                  v-model="slug"
-                  outlined
-                  dense
-                  class="mt-5"
-                ></v-text-field>
+                <v-text-field v-model="slug" outlined dense class="mt-5"></v-text-field>
               </td>
             </tr>
             <tr>
               <td>Ảnh thumbnail</td>
               <td>
                 <input class="mb-3" type="file" @change="inputImage($event)" />
-                <v-img
-                  :src="image_url ? image_url : image(old_image)"
-                  height="200px"
-                  width="200px"
-                  style="object-fit: cover"
-                />
+                <v-img :src="image_url ? image_url : image(old_image)" height="200px" width="200px"
+                  style="object-fit: cover" />
               </td>
             </tr>
             <tr>
               <td>Danh mục bài viết</td>
               <td>
-                <v-select
-                  :items="categories"
-                  v-model="category_id"
-                  dense
-                  class="mt-5"
-                  outlined
-                  item-text="name"
-                  item-value="id"
-                ></v-select>
+                <v-select :items="categories" v-model="category_id" dense class="mt-5" outlined item-text="name"
+                  item-value="id"></v-select>
               </td>
             </tr>
             <tr>
               <td>Bài viết nổi bật</td>
               <td>
-                <v-select
-                  :items="featured_list"
-                  v-model="featured"
-                  dense
-                  class="mt-5"
-                  outlined
-                  item-text="text"
-                  item-value="value"
-                ></v-select>
+                <v-select :items="featured_list" v-model="featured" dense class="mt-5" outlined item-text="text"
+                  item-value="value"></v-select>
               </td>
             </tr>
             <tr>
               <td>Nội dung</td>
               <td>
-                <vue-editor
-                  id="editor"
-                  v-model="body"
-                  use-custom-image-handler
-                  @image-added="handleImageAdded"
-                />
+                <vue-editor id="editor" v-model="body" use-custom-image-handler @image-added="handleImageAdded" />
               </td>
             </tr>
             <tr>
@@ -192,14 +159,11 @@ export default {
       str = str.replace(/^-+|-+$/g, "");
       return str;
     },
-  },
-  watch: {
-    title() {
+    getSlug() {
       this.slug = this.toSlug(this.title);
-    },
+    }
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>
