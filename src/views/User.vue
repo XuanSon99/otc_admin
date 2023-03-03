@@ -2,20 +2,13 @@
   <main class="custom-pd">
     <div class="item secondary">
       <v-card-title>
-        <v-icon class="mr-2" color="primary" large
-          >mdi-account-circle-outline</v-icon
-        >
+        <v-icon class="mr-2" color="primary" large>mdi-account-circle-outline</v-icon>
         Quản lý người dùng
         <v-spacer></v-spacer>
-        <v-text-field
-          v-model="search"
-          append-icon="mdi-magnify"
-          label="Search"
-          single-line
-          hide-details
-        ></v-text-field>
+        <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
       </v-card-title>
-      <v-data-table :headers="headers" :items="data" :search="search">
+      <v-data-table :headers="headers" :items="data" :search="search" :items-per-page="itemsPerPage" :page.sync="page"
+        :server-items-length="totalItems" :footer-props="{ 'items-per-page-options': [10, 10] }">
         <template v-slot:[`item.created_at`]="{ item }">
           {{ formatDate(item.created_at) }}
         </template>
@@ -26,11 +19,7 @@
           <v-btn v-else small class="primary"> Đã duyệt </v-btn>
         </template>
         <template v-slot:[`item.actions`]="{ item }">
-          <v-btn
-            small
-            class="info mr-2"
-            @click="$router.push('/user/' + item.username)"
-          >
+          <v-btn small class="info mr-2" @click="$router.push('/user/' + item.username)">
             Chi tiết
           </v-btn>
           <v-btn small class="success mr-2" @click="editItem(item)">
@@ -50,12 +39,7 @@
         </v-card-title>
         <v-divider></v-divider>
         <div class="mx-6 mt-6">
-          <v-text-field
-            v-model="content"
-            outlined
-            label="Nội dung"
-            clearable
-          ></v-text-field>
+          <v-text-field v-model="content" outlined label="Nội dung" clearable></v-text-field>
         </div>
         <v-divider></v-divider>
         <v-card-actions>
@@ -89,7 +73,9 @@ export default {
       edit_id: "",
       content: "",
       chat_id: "",
-      ok: "",
+      page: 1,
+      itemsPerPage: 10,
+      totalItems: 0
     };
   },
   computed: {
@@ -103,8 +89,9 @@ export default {
   },
   methods: {
     getData() {
-      this.CallAPI("get", "client", {}, (res) => {
-        this.data = res.data;
+      this.CallAPI("get", "client?page=" + this.page, {}, (res) => {
+        this.data = res.data.data;
+        this.totalItems = res.data.total
       });
     },
     editItem(item) {
@@ -135,5 +122,10 @@ export default {
       return date.slice(0, 10);
     },
   },
+  watch: {
+    page() {
+      this.getData()
+    }
+  }
 };
 </script>
