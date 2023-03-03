@@ -34,6 +34,7 @@ export default {
       valid: false,
       username: "",
       password: "",
+      ok: ""
     };
   },
   methods: {
