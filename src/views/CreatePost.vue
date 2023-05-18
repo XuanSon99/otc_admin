@@ -17,6 +17,19 @@
               </td>
             </tr>
             <tr>
+              <td>SEO Mô tả</td>
+              <td>
+                <v-textarea auto-grow outlined rows="2" row-height="20" v-model="meta_description"
+                  class="mt-5"></v-textarea>
+              </td>
+            </tr>
+            <tr>
+              <td>SEO Keywords</td>
+              <td>
+                <v-textarea auto-grow outlined rows="2" row-height="20" v-model="meta_keywords" class="mt-5"></v-textarea>
+              </td>
+            </tr>
+            <tr>
               <td>Ảnh thumbnail</td>
               <td>
                 <input class="mb-3" type="file" @change="inputImage($event)" />
@@ -67,6 +80,8 @@ export default {
       title: "",
       slug: "",
       new_image: "",
+      meta_description: "",
+      meta_keywords: "",
       category_id: "",
       featured: 0,
       featured_list: [
@@ -96,7 +111,7 @@ export default {
       formData.append("image", file);
 
       this.CallAPI("post", "upload", formData, (res) => {
-        const url = "https://chootc.com/storage" + res.data;
+        const url = "https://api.chootc.com/storage" + res.data;
         Editor.insertEmbed(cursorLocation, "image", url);
         resetUploader();
       });
@@ -114,6 +129,8 @@ export default {
         this.body = res.data.body;
         this.featured = res.data.featured;
         this.category_id = res.data.category_id;
+        this.meta_description = res.data.meta_description;
+        this.meta_keywords = res.data.meta_keywords;
         this.slug = res.data.slug;
         this.old_image = res.data.image;
         this.is_edit = true;
@@ -125,7 +142,7 @@ export default {
       });
     },
     confirm() {
-      if (!this.title || !this.body) {
+      if (!this.title || !this.body || !this.meta_description || !this.meta_keywords) {
         this.$toast.error("Vui lòng nhập đủ thông tin!");
         return;
       }
@@ -134,6 +151,8 @@ export default {
       formData.append("slug", this.slug);
       formData.append("category_id", this.category_id);
       formData.append("featured", this.featured);
+      formData.append("meta_description", this.meta_description);
+      formData.append("meta_keywords", this.meta_keywords);
       formData.append("body", this.body);
       if (this.new_image) {
         formData.append("image", this.new_image);
