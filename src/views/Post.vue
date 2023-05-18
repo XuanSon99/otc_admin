@@ -19,7 +19,7 @@
           <img :src="image(item.image)" alt="" />
         </template>
         <template v-slot:[`item.title`]="{ item }">
-          <a :href="'https://chootc.com/bai-viet/' + item.slug" target="_blank">{{ item.title }}</a>
+          <a :href="'https://chootc.com/' + item.slug" target="_blank">{{ item.title }}</a>
         </template>
         <template v-slot:[`item.actions`]="{ item }">
           <v-btn class="success mr-3" @click="toEdit(item)"> Sửa </v-btn>
