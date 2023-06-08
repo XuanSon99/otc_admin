@@ -2,13 +2,28 @@
   <main class="custom-pd">
     <div class="item secondary">
       <v-card-title>
-        <v-icon class="mr-2" color="primary" large>mdi-account-circle-outline</v-icon>
+        <v-icon class="mr-2" color="primary" large
+          >mdi-account-circle-outline</v-icon
+        >
         Quản lý người dùng
         <v-spacer></v-spacer>
-        <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          single-line
+          hide-details
+        ></v-text-field>
       </v-card-title>
-      <v-data-table :headers="headers" :items="data" :search="search" :items-per-page="5" :page.sync="page"
-        :server-items-length="totalItems" :footer-props="{ 'items-per-page-options': [5, 5] }">
+      <v-data-table
+        :headers="headers"
+        :items="data"
+        :search="search"
+        :items-per-page="5"
+        :page.sync="page"
+        :server-items-length="totalItems"
+        :footer-props="{ 'items-per-page-options': [5, 5] }"
+      >
         <template v-slot:[`item.created_at`]="{ item }">
           {{ formatDate(item.created_at) }}
         </template>
@@ -19,7 +34,11 @@
           <v-btn v-else small class="primary"> Đã duyệt </v-btn>
         </template>
         <template v-slot:[`item.actions`]="{ item }">
-          <v-btn small class="info mr-2" @click="$router.push('/user/' + item.username)">
+          <v-btn
+            small
+            class="info mr-2"
+            @click="$router.push('/user/' + item.username)"
+          >
             Chi tiết
           </v-btn>
           <v-btn small class="success mr-2" @click="editItem(item)">
@@ -39,7 +58,12 @@
         </v-card-title>
         <v-divider></v-divider>
         <div class="mx-6 mt-6">
-          <v-text-field v-model="content" outlined label="Nội dung" clearable></v-text-field>
+          <v-text-field
+            v-model="content"
+            outlined
+            label="Nội dung"
+            clearable
+          ></v-text-field>
         </div>
         <v-divider></v-divider>
         <v-card-actions>
@@ -73,24 +97,24 @@ export default {
       edit_id: "",
       content: "",
       chat_id: "",
-      page: 1,
-      totalItems: 0
+      page: 0,
+      totalItems: 0,
     };
   },
   computed: {
-    ...mapGetters(["account"]),
+    ...mapGetters(["account", "user_page"]),
   },
   mounted() {
-    this.getData();
     if (!this.account.rules.includes("user")) {
       this.$router.push("/");
     }
+    this.page = this.user_page;
   },
   methods: {
     getData() {
       this.CallAPI("get", "client?page=" + this.page, {}, (res) => {
         this.data = res.data.data;
-        this.totalItems = res.data.total
+        this.totalItems = res.data.total;
       });
     },
     editItem(item) {
@@ -123,8 +147,9 @@ export default {
   },
   watch: {
     page() {
-      this.getData()
-    }
-  }
+      this.getData();
+      this.$store.dispatch("setUserPage", this.page);
+    },
+  },
 };
 </script>

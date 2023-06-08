@@ -8,19 +8,12 @@ export default new Vuex.Store({
     drawer: true,
     loader: false,
     account: "",
-    user: "",
-    web3: "",
-    wallet_balance: ""
+    user_page: 1,
+    post_page: 1
   },
   mutations: {
     setAccount(state, payload) {
       state.account = payload
-    },
-    setUser(state, payload) {
-      state.user = payload
-    },
-    setWeb3(state, payload) {
-      state.web3 = payload
     },
     setLoader(state, payload) {
       state.loader = payload
@@ -28,19 +21,16 @@ export default new Vuex.Store({
     setDrawer(state, payload) {
       state.drawer = payload
     },
-    setWalletBalance(state, payload) {
-      state.wallet_balance = payload
+    setUserPage(state, payload) {
+      state.user_page = payload
+    },
+    setPostPage(state, payload) {
+      state.post_page = payload
     },
   },
   actions: {
     setAccount({ commit }, payload) {
       commit("setAccount", payload)
-    },
-    setUser({ commit }, payload) {
-      commit("setUser", payload)
-    },
-    setWeb3({ commit }, payload) {
-      commit("setWeb3", payload)
     },
     setLoader({ commit }, payload) {
       commit("setLoader", payload)
@@ -48,16 +38,18 @@ export default new Vuex.Store({
     setDrawer({ commit }, payload) {
       commit("setDrawer", payload)
     },
-    setWalletBalance({ commit }, payload) {
-      commit("setWalletBalance", payload)
+    setUserPage({ commit }, payload) {
+      commit("setUserPage", payload)
+    },
+    setPostPage({ commit }, payload) {
+      commit("setPostPage", payload)
     },
   },
   getters: {
     account: state => state.account,
-    user: state => state.user,
-    web3: state => state.web3,
     loader: state => state.loader,
     drawer: state => state.drawer,
-    wallet_balance: state => state.wallet_balance,
+    user_page: state => state.user_page,
+    post_page: state => state.post_page,
   }
 })

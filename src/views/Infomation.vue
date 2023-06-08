@@ -38,7 +38,11 @@
                   <expandable-image
                     :src="image(data.portrait_photo)"
                     class="mr-2"
+                    v-if="!video"
                   />
+                  <video controls v-else class="videp-preview">
+                    <source :src="`https://api.chootc.com/storage${video}`" />
+                  </video>
                 </div>
               </td>
             </tr>
@@ -184,6 +188,7 @@ export default {
         "Thẻ CCCD/CMND của bạn đã hết hạn!",
       ],
       reason: "",
+      video: "",
     };
   },
   mounted() {
@@ -197,6 +202,7 @@ export default {
         this.reputation = res.data.reputation;
         this.kyc = res.data.kyc;
         this.username = res.data.username;
+        this.video = res.data.portrait_video;
       });
     },
     update() {

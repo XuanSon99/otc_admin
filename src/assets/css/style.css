@@ -257,3 +257,7 @@ p.cancel1 {
 #editor .ql-editor {
     max-height: 600px
 }
+.videp-preview{
+    height: 130px;
+    width: 200px;
+}
